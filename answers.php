@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 
 // Run Answer 1
-// testInputFileWithCalculator();
+testInputFileWithCalculator();
 
 // Run Answer 4
 // echo sumOfMultiples5711();
@@ -15,22 +15,21 @@
  * @param  string $purchasePrice
  * @param  string $feePercent
  * @param  string $sellPrice
- * @return string
+ * @return float
  */
-function widgetProfitCalculator(string $purchasePrice, string $feePercent, string $sellPrice, int $precision = 2): string
+function widgetProfitCalculator(string $purchasePrice, string $feePercent, int $precision = 2)
 {
-    return bcadd($sellPrice, bcadd('-' . bcmul($sellPrice, $feePercent, $precision), '-' . $purchasePrice, $precision), $precision);
+    return ceil($purchasePrice/ (1-((float)$feePercent)));
 }
 
 function testInputFileWithCalculator()
 {
     $fileContents = file_get_contents('product_costs.txt');
-    $counter = 1;
-    foreach (explode(PHP_EOL, $fileContents) as $line) {
-        list($purchasePrice, $feePercent) = explode(' ', $line);
-        echo 'Line ' . $counter . ': ' . widgetProfitCalculator($purchasePrice, 1);
-
-        $counter++;
+    $fileArr = explode(PHP_EOL, $fileContents);
+    $fileLen = count($fileArr);
+    for ($i=1; $i < $fileLen; $i++) {
+        list($purchasePrice, $feePercent) = explode(' ', $fileArr[$i-1]);
+        echo 'Line ' . $i . ': ' . widgetProfitCalculator($purchasePrice, $feePercent). PHP_EOL;
     }
 }
 

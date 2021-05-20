@@ -1,0 +1,115 @@
+Problem 1
+Acme, Inc. is a retailer for widgets. They purchase each widget at a cost of C. They sell each widget for a price of P. They pay a processing fee F, which is a percentage of price P (as a decimal).
+
+Consider:
+C = 10
+P = 20
+F = 0.10
+
+Their profit will be:
+
+20.00 (P) - 20 * 0.10 (F) - 10.00 (C) = $8.00
+
+In other words, if their cost is $10.00 and they sell the widget for $20.00, they will pay a 10% processing fee on the $20.00 sales price (or $2.00) as well as their cost of $10.00.
+
+Write a program that accepts the following input file with each input line representing the variable values separated by spaces. The program should output the minimum sales price (P) that the product can be sold for without losing money.
+Input:
+C1 F1
+C2 F2
+C3 F3
+Output:
+Line 1: P1
+Line 2: P2
+Line 3: P3
+etc.
+
+Download Input File
+
+Problem 2
+Write a SQL query to find the number of students in each major when we have the following tables:
+CREATE TABLE `students` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL DEFAULT '',
+  `major_id` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `major` (`major_id`)
+)
+
+CREATE TABLE `majors` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+)
+
+
+Problem 3
+Explain the purpose of this function:
+
+function myFunction (int x)
+{
+    if ((x & 1) == 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+Problem 4
+Write a function that returns the sum of all the multiples of 5, 7 and 11 from 1 through 999. You should think of an efficient way to compute your solution.
+
+Problem 5
+The following library parses XLS files. Download the library below. The included example.php uses the library to open up Example.xls and output the contents. Example.xls should contain an anchor element with an HREF to the URL http://foo.bar.com/one/two, however, it does not properly appear. In fact, in certain versions of PHP, the page is rendered without an anchor element present at all. The page should be rendered with an anchor element and the URL should be clickable. Find the bug and correct it.
+
+Download Excel Reader
+
+Try to complete the problem above without the hint. If you are totally stuck, however, reveal the hint
+
+Problem 6
+Your goal is to find the number of occurrences of a particular string within a group of characters. The letters in the string do not need to be next to each other but must appear in sequential order.
+
+For example, the following sequence contains four occurrences of the string "abc"
+
+Sequence "aabcc"
+Occurrences
+aabcc
+aabcc
+aabcc
+aabcc
+
+Given the input file, print the number of occurrences of the string "join the nmi team" for each line. Considering the number of occurrences may be so large, you should print only the last five digits (right aligned, padded to 5 digits with zeros).
+
+Example:
+Input:
+oinj oin the nmi team
+jjooiinn  tthhe nmi abcd team
+join the nmiteam
+Output:
+Line 1: 00001
+Line 2: 00256
+Line 3: 00000
+
+Download Input File
+
+Try to complete the problem above without the hint. Below is the hint
+
+##
+The word we want to find is S = "join the nmi team", in a long string T. In fact the solution is not very different when we want to find any S. It is actually illustrative to picture the cases for short words.
+
+In case S is just a single character, you just need to count how many times this character appears in T. If S = "xy" is a string of length 2, instead of brute force all the possible positions, one can do it in linear time, start from left to the right. For each occurrence of 'y', one needs to know how many 'x's appeared before that 'y'.
+
+The general solution follows this pattern. Let us again use S = "join the nmi team" as an example.
+
+So, let us define, for each position i in T, T(i) to be the string consists of the first i characters of T. And write
+
+Dp[i,1]: How many times we can find "j" in T(i)?
+Dp[i,2]: How many times we can find "jo" in T(i)?
+Dp[i,3]: How many times we can find "joi" in T(i)?
+Dp[i,4]: How many times we can find "join" in T(i)?
+...
+Dp[i,16]: How many times we can find "join the nmi tea" in T(i)?
+Dp[i,17]: How many times we can find "join the nmi team" in T(i)?
+Assume Dp[i,j] is computed for each j, let us see how easy we can compute, say, Dp[i+1,4]:
+If the (i+1)-th character of T is not 'n', then Dp[i+1,4] = Dp[i,4].
+If the (i+1)-th character of T is 'n', then we can include all the "join"s found in T(i), as well as those "join"s ends exactly on the (i+1)-th character, so Dp[i+1,4] = Dp[i,4] + Dp[i,3].
+Finally, let n be the length of the text T, Dp[n,17] will be our answer.
